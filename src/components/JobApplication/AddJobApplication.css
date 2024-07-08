@@ -1,0 +1,122 @@
+.add-job-application {
+    max-width: 600px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 30px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+
+.add-job-application-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-image: url('../../../public/cool-background.png');
+    background-size: 200% 200%;
+    animation: gradient 60s ease infinite;
+}
+
+@keyframes gradient {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+.add-job-application h2 {
+    margin-bottom: 20px;
+    text-align: center;
+    color: #7c4dff;
+    font-size: 28px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: #333;
+    font-size: 16px;
+}
+
+.form-group input[type='text'],
+.form-group input[type='date'],
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: 10px;
+    border: 2px solid #ddd;
+    border-radius: 6px;
+    font-size: 16px;
+    transition: border-color 0.3s;
+}
+
+.form-group input[type='text']:focus,
+.form-group input[type='date']:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    border-color: #7c4dff;
+    outline: none;
+}
+
+.form-group input[type='checkbox'] {
+    margin-left: 5px;
+}
+
+.form-group .error {
+    border-color: #ff0000;
+}
+
+.form-group .error-message {
+    color: #ff5252;
+    font-size: 12px;
+    margin-top: 5px;
+}
+
+.form-group textarea {
+    height: 100px;
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 20px;
+}
+
+.form-row .form-group {
+    margin-bottom: 0;
+}
+
+button[type='submit'] {
+    display: block;
+    width: 100%;
+    padding: 12px;
+    background-color: #7c4dff;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button[type='submit']:hover {
+    background-color: #6200ea;
+}
+
+.action-star {
+    color: #ffd700;
+    font-size: 20px;
+    cursor: pointer;
+}

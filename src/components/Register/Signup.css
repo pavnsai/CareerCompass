@@ -1,0 +1,100 @@
+
+.signup-container {
+    display: flex;
+    justify-content: center;
+    align-items: start;
+    min-height: 100vh;
+    background-image: url('../../../public/cool-background (2).png');
+    background-size: 200% 200%;
+    animation: gradient 60s ease infinite;
+}
+
+.signup-form {
+    margin-top: 50px;
+}
+
+h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #7c4dff;
+    font-size: 28px;
+}
+
+.signup-form,
+.verification-options,
+.otp-form,
+.email-toast{
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 20px;
+    border-radius: 5px;
+    width: 400px;
+}
+
+.signup-form .form-label {
+    font-weight: bold;
+}
+
+.signup-form .form-control {
+    border-radius: 3px;
+}
+
+.signup-form .btn-primary {
+    width: 100%;
+    margin-top: 20px;
+}
+
+.signup-form .alert {
+    margin-top: 20px;
+}
+
+.signup-form .text-center {
+    margin-top: 20px;
+}
+
+.signup-form .text-center a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+.signup-form .text-center a:hover {
+    text-decoration: underline;
+}
+
+.password-input {
+    position: relative;
+}
+
+.password-toggle {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    cursor: pointer;
+}
+
+.password-toggle svg {
+    width: 20px;
+    height: 20px;
+    fill: #6c757d;
+}
+
+.password-toggle:hover svg {
+    fill: #000;
+}
+
+.verification-options {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.verification-options .btn {
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.verification-options .divider-text {
+    margin: 10px 0;
+    text-align: center;
+}
