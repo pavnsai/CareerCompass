@@ -15,6 +15,7 @@ import {urlPaths} from "../../Constants";
 import {IoMdArchive} from "react-icons/io";
 import Select from 'react-select';
 import Loader from "../Utils/Loader";
+import moment from 'moment';
 
 
 const TableContainer = () => {
@@ -77,21 +78,74 @@ const TableContainer = () => {
             )
         },
         {Header: 'Role', accessor: 'position'},
-        {Header: 'Applied On', accessor: 'applicationDate'},
+        {Header: 'Applied On',
+            accessor: 'applicationDate',
+            Cell: ({ value }) => moment(value).format('MM-DD-YYYY'),
+        },
         {Header: 'Status', accessor: 'status'},
         {
             Header: 'Tags',
             accessor: 'jobTags',
-            Cell: ({value}) => (
-                <div className="tags-cell">
-                    {value.map((tag, index) => (
-                        <span key={index} className={`added-tag tag-${index % 4}`}>
-              {tag.name}
-            </span>
-                    ))}
-                </div>
-            ),
+            Cell: ({value}) => {
+                const cellRef = React.useRef(null);
+                const [isOverflowing, setIsOverflowing] = React.useState(false);
+
+                React.useEffect(() => {
+                    const checkOverflow = () => {
+                        if (cellRef.current) {
+                            const cell = cellRef.current;
+                            const isOverflowing = cell.scrollWidth > cell.clientWidth;
+                            setIsOverflowing(isOverflowing);
+
+                            if (isOverflowing) {
+                                const tags = [...cell.children].filter(child => child.classList.contains('added-tag'));
+                                let visibleWidth = 0;
+                                for (let i = 0; i < tags.length; i++) {
+                                    const tagWidth = tags[i].offsetWidth + 4; // 4px for gap
+                                    if (visibleWidth + tagWidth > cell.clientWidth - 30) { // 30px for fade + ellipsis
+                                        tags[i].style.opacity = '0.5';
+                                        break;
+                                    }
+                                    visibleWidth += tagWidth;
+                                }
+                            }
+                        }
+                    };
+
+                    checkOverflow();
+                    window.addEventListener('resize', checkOverflow);
+                    return () => window.removeEventListener('resize', checkOverflow);
+                }, [value]);
+
+                if (!value || value.length === 0) {
+                    return <div></div>;
+                }
+
+                return (
+                    <div ref={cellRef} className={`tags-cell ${isOverflowing ? 'overflowing' : ''}`}>
+                        {value.map((tag, index) => (
+                            <span key={index} className={`added-tag tag-${index % 4}`}>
+                        {tag.name}
+                    </span>
+                        ))}
+                        <span className="ellipsis">...</span>
+                    </div>
+                );
+            },
         },
+        // {
+        //     Header: 'Tags',
+        //     accessor: 'jobTags',
+        //     Cell: ({value}) => (
+        //         <div className="tags-cell">
+        //             {value.map((tag, index) => (
+        //                 <span key={index} className={`added-tag tag-${index % 4}`}>
+        //       {tag.name}
+        //     </span>
+        //             ))}
+        //         </div>
+        //     ),
+        // },
         {
             Header: 'Actions',
             accessor: 'actions',

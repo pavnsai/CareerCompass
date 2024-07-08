@@ -52,12 +52,61 @@
 }
 
 
+/*.tags-cell {*/
+/*    display: flex;*/
+/*    flex-wrap: nowrap;*/
+/*    gap: 8px;*/
+/*    overflow-x: auto;*/
+/*    white-space: nowrap;*/
+/*    max-width: 200px;*/
+/*}*/
+
+
 .tags-cell {
     display: flex;
     flex-wrap: nowrap;
-    gap: 8px;
-    overflow-x: auto;
+    gap: 4px;
+    max-width: 200px;
+    overflow: hidden;
+    position: relative;
+}
+
+.added-tag {
+    padding: 2px 6px;
+    border-radius: 12px;
+    font-size: 12px;
+    color: white;
     white-space: nowrap;
+    flex-shrink: 0;
+}
+
+.tags-cell::after {
+    content: '';
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: 30px;
+    background: linear-gradient(to right, transparent, white);
+    pointer-events: none;
+    display: none;
+}
+
+.tags-cell.overflowing::after {
+    display: block;
+}
+
+.ellipsis {
+    position: absolute;
+    right: 0;
+    bottom: 0px;
+    background: white;
+    padding: 0 4px;
+    display: none;
+}
+
+.tags-cell.overflowing .ellipsis {
+    display: block;
 }
 
 .tag {

@@ -12,6 +12,7 @@ import ArchivedTableContainer from "./components/TableContainer/ArchivedTableCon
 import EditJobApplication from "./components/JobApplication/EditJobApplication";
 import AddTags from "./components/Tags/AddTags";
 import AddJobApplication from "./components/JobApplication/AddJobApplication";
+import ViewJobApplication from "./components/JobApplication/ViewJobApplication";
 
 function App() {
   const [signupKey, setSignupKey] = useState(0);
@@ -29,7 +30,7 @@ function App() {
             <Route path='/login' element={<Login/>} />
             <Route path='/signup' element={<Signup key={signupKey} />} />
             <Route path='/jobs' element={<PrivateRoute><TableContainer /></PrivateRoute>} />
-            {/*<Route path="/details"  element={<PrivateRoute><ViewJobApplication /></PrivateRoute>} />*/}
+            <Route path="/details"  element={<PrivateRoute><ViewJobApplication /></PrivateRoute>} />
             <Route path="/edit"  element={<PrivateRoute><EditJobApplication /></PrivateRoute>} />
             <Route path="/addTags"  element={<PrivateRoute><AddTags /></PrivateRoute>} />
             <Route path="/addJobApplication"  element={<PrivateRoute><AddJobApplication /></PrivateRoute>} />

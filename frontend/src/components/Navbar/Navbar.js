@@ -1,5 +1,5 @@
 import React from 'react';
-import {Link, useLocation} from 'react-router-dom';
+import {Link, useLocation, useNavigate} from 'react-router-dom';
 import {Container, Navbar as BootstrapNavbar, Nav} from 'react-bootstrap';
 import {useAuth} from '../Context/AuthContext';
 import './Navbar.css';
@@ -7,6 +7,7 @@ import './Navbar.css';
 function Navbar({onSignupClick}) {
   const {getUser, userIsAuthenticated, userLogout} = useAuth();
   const location = useLocation();
+  const navigate = useNavigate();
   const logout = () => {
     userLogout();
   };
@@ -19,7 +20,9 @@ function Navbar({onSignupClick}) {
   const enterMenuStyle = () => {
     return userIsAuthenticated() ? {display: 'none'} : {display: 'block'};
   };
-
+  const handleGuestClick = () => {
+    navigate('/login', { state: { email: "fireflies186@gmail.com",password:"Admin@123" } });
+  };
   const logoutMenuStyle = () => {
     return userIsAuthenticated() ? {display: 'block'} : {display: 'none'};
   };
@@ -64,6 +67,9 @@ function Navbar({onSignupClick}) {
                   </>
               ) : (
                   <>
+                    <button onClick={handleGuestClick} style={enterMenuStyle()} className="login-button">
+                      Guest
+                    </button>
                     <Link to="/login" style={{ textDecoration: 'none' }}>
                       <button as={Link} to="/login"
                               onClick={onSignupClick}
@@ -72,7 +78,7 @@ function Navbar({onSignupClick}) {
                         Login
                       </button>
                     </Link>
-                    <Link to="/signup" style={{ textDecoration: 'none' }}>
+                    <Link to="/signup" style={{textDecoration: 'none'}}>
                       <button as={Link} to="/signup" onClick={onSignupClick} style={enterMenuStyle()}
                               className="signup-button">
                         Sign Up

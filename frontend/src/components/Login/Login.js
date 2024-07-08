@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {NavLink, Navigate, useNavigate} from 'react-router-dom';
+import {NavLink, Navigate, useNavigate, useLocation} from 'react-router-dom';
 import {Modal, Button, Form, Alert} from 'react-bootstrap';
 import {useAuth} from '../Context/AuthContext';
 import {careerCompassApi} from '../Utils/CareerCompassApi';
@@ -21,12 +21,31 @@ function Login() {
     const Auth = useAuth();
     const isLoggedIn = Auth.userIsAuthenticated();
     const navigate = useNavigate();
+    const location = useLocation();
+    const { state } = location;
+    useEffect(() => {
+        if (state) {
+            setEmail(state.email || '');
+            setPassword(state.password || '');
+        }else {
+            setEmail( '');
+            setPassword( '');
+        }
+    }, [state]);
     const [isError, setIsError] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
-
+    const [email, setEmail]=useState('');
+    const [password, setPassword]=useState('');
     const togglePasswordVisibility = () => {
         setShowPassword(!showPassword);
+    };
+    const handleEmailChange = (e) => {
+        setEmail(e.target.value);
+    };
+
+    const handlePasswordChange = (e) => {
+        setPassword(e.target.value);
     };
 
     useEffect(() => {
@@ -73,11 +92,12 @@ function Login() {
         <div className="login-container">
             {isLoading && <Loader />}
             <Formik
-                initialValues={{ email: '', password: '' }}
+                enableReinitialize={true}
+                initialValues={{ email: email, password: password }}
                 validationSchema={LoginSchema}
                 onSubmit={handleSubmit}
             >
-                {({ values, errors, touched, handleChange, handleBlur, handleSubmit, isSubmitting }) => (
+                {({ values, errors, touched, handleChange, handleBlur,setFieldValue, handleSubmit, isSubmitting }) => (
                     <Form onSubmit={handleSubmit} className="login-form">
                         <h2>Login</h2>
                         <Form.Group className="mb-3">
@@ -85,8 +105,11 @@ function Login() {
                             <Form.Control
                                 type="email"
                                 name="email"
-                                value={values.email}
-                                onChange={handleChange}
+                                value={email}
+                                onChange={(e) => {
+                                    handleEmailChange(e);
+                                    setFieldValue('email', e.target.value);
+                                }}
                                 onBlur={handleBlur}
                                 isInvalid={touched.email && errors.email}
                             />
@@ -98,8 +121,11 @@ function Login() {
                                 <Form.Control
                                     type={showPassword ? "text" : "password"}
                                     name="password"
-                                    value={values.password}
-                                    onChange={handleChange}
+                                    value={password}
+                                    onChange={(e) => {
+                                        handlePasswordChange(e);
+                                        setFieldValue('password', e.target.value);
+                                    }}
                                     onBlur={handleBlur}
                                     isInvalid={touched.password && errors.password}
                                 />
