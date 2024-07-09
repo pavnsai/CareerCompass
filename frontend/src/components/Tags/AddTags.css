@@ -8,7 +8,7 @@
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.add-tags-background-container{
+.add-tags-background-container {
     display: flex;
     justify-content: center;
     align-items: start;
@@ -17,6 +17,7 @@
     background-size: 200% 200%;
     animation: gradient 60s ease infinite;
 }
+
 .add-tags-title {
     font-size: 28px;
     margin-bottom: 20px;
@@ -38,12 +39,6 @@
     color: #333;
 }
 
-.remove-tag-btn {
-    border: none;
-    color: #da1818;
-    margin-left: 5px;
-    cursor: pointer;
-}
 
 .input-container {
     display: flex;
@@ -87,6 +82,7 @@
     display: flex;
     flex-wrap: wrap;
 }
+
 .added-tag {
     display: inline-block;
     padding: 5px 10px;
@@ -97,9 +93,18 @@
     color: #fff;
 }
 
+.remove-tag-btn {
+    border: none;
+    color: #da1818;
+    margin-left: 5px;
+    cursor: pointer;
+    padding: 2px 5px;
+}
+
 .added-tag:nth-child(odd) {
     background-color: #007bff;
 }
+
 .added-tag:nth-child(even) {
     background-color: #28a745;
 }

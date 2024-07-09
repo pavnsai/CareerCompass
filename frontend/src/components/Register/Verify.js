@@ -1,25 +1,25 @@
 import React, {useEffect, useState} from 'react';
-import { useParams, Link, useNavigate } from 'react-router-dom';
+import {useParams, Link, useNavigate} from 'react-router-dom';
 import {ToastContainer, toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import './Verify.css'
 import {urlPaths} from "../../Constants";
 import {careerCompassApi} from "../Utils/CareerCompassApi";
+
 function Verify() {
-    const { email, hash } = useParams();
+    const {email, hash} = useParams();
     const notify = (message) => toast(message);
     const navigate = useNavigate();
     const [verificationSuccess, setVerificationSuccess] = useState(null);
     useEffect(() => {
         const handleVerification = async () => {
             try {
-                console.log("coming here")
                 const response = await careerCompassApi.postApiCallWithoutToken(urlPaths.VALIDATE_VERIFICATION, {
                     email,
                     verificationStrategyType: 'email',
                     verificationChallenge: hash
                 });
-                if (response.statusCode === 200 && response.data.status==='Success') {
+                if (response.statusCode === 200 && response.data.status === 'Success') {
                     notify('Verification is successful. Redirecting to login page..')
                     setVerificationSuccess(true);
                     setTimeout(() => {
@@ -39,7 +39,7 @@ function Verify() {
     }, []);
 
     const handleReVerification = () => {
-        navigate('/signup',{ state: { email: email } });
+        navigate('/signup', {state: {email: email}});
     };
     return (
         <div className="verification-container">

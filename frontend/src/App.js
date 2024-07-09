@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { AuthProvider } from './components/Context/AuthContext';
 import PrivateRoute from './components/Utils/PrivateRoute';
 import Navbar from './components/Navbar/Navbar';

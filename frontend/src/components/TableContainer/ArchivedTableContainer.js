@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import { useNavigate } from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
 import Table from './Table';
 import {AiOutlineEye, AiFillStar, AiOutlineStar, AiOutlineSearch} from 'react-icons/ai';
 import './TableContainer.css';
@@ -18,16 +18,15 @@ const ArchivedTableContainer = () => {
     const [showDeleteModal, setShowDeleteModal] = useState(false);
     const [selectedRowData, setSelectedRowData] = useState(null);
     const [user, setUser] = useState(null);
-    const [data, setData]=useState([]);
+    const [data, setData] = useState([]);
     const [filteredData, setFilteredData] = useState([]);
     const existingTags = JSON.parse(localStorage.getItem('allTags'))
-    const allTags=existingTags.map(tag => tag.name);
+    const allTags = existingTags.map(tag => tag.name);
     const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
         const storedUser = JSON.parse(localStorage.getItem('userDetails'))
         setUser(storedUser)
-        const userJson = JSON.parse(localStorage.getItem('user'))
         const archivedJobs = JSON.parse(localStorage.getItem('archivedJobs'));
         const fetchData = async () => {
             try {
@@ -40,35 +39,32 @@ const ArchivedTableContainer = () => {
     }, []);
 
 
-
-
-
-
     const columns = [
         {
             Header: 'Starred',
             accessor: 'starred',
             Cell: ({row}) => (
                 <div>
-                    {row.original.starred ? <AiFillStar aria-disabled={true} className="action-icon action-star" />
+                    {row.original.starred ? <AiFillStar aria-disabled={true} className="action-icon action-star"/>
                         :
-                        <AiOutlineStar aria-disabled={true} className="action-icon" />}
+                        <AiOutlineStar aria-disabled={true} className="action-icon"/>}
                 </div>
             )
         },
         {
             Header: 'Company Name',
             accessor: 'companyUrl',
-            Cell: ({ row }) => (
+            Cell: ({row}) => (
                 <a href={row.original.companyUrl} target="_blank" rel="noopener noreferrer">
                     {row.original.company}
                 </a>
             )
         },
-        { Header: 'Role', accessor: 'position' },
-        {Header: 'Applied On',
+        {Header: 'Role', accessor: 'position'},
+        {
+            Header: 'Applied On',
             accessor: 'applicationDate',
-            Cell: ({ value }) => moment(value).format('MM-DD-YYYY'),
+            Cell: ({value}) => moment(value).format('MM-DD-YYYY'),
         },
         {Header: 'Status', accessor: 'status'},
         {
@@ -124,22 +120,19 @@ const ArchivedTableContainer = () => {
         {
             Header: 'Actions',
             accessor: 'actions',
-            Cell: ({ row }) => (
+            Cell: ({row}) => (
                 <>
-                    <AiOutlineEye onClick={() => handleView(row.original)} className="action-icon" />
-                    <BiSolidArchiveOut onClick={() => handleDelete(row.original)} className="action-icon" />
+                    <AiOutlineEye onClick={() => handleView(row.original)} className="action-icon"/>
+                    <BiSolidArchiveOut onClick={() => handleDelete(row.original)} className="action-icon"/>
                 </>
             )
         }
     ];
 
     const handleView = (rowData) => {
-        navigate('/details', { state: { rowData,showEdit:false } });
+        navigate('/details', {state: {rowData, showEdit: false}});
     };
 
-    const handleEdit = (rowData) => {
-        navigate('/edit', { state: { rowData } });
-    };
 
     const handleDelete = (rowData) => {
         setSelectedRowData(rowData);
@@ -151,8 +144,7 @@ const ArchivedTableContainer = () => {
             setIsLoading(true);
             const storedUser = JSON.parse(localStorage.getItem('userDetails'))
             const userJson = JSON.parse(localStorage.getItem('user'))
-            const response = await careerCompassApi.deleteApiCall(userJson, urlPaths.UNARCHIVE_JOB_APPLICATION + storedUser.userId+`/${selectedRowData.id}`);
-            console.log('API Response:', response);
+            const response = await careerCompassApi.deleteApiCall(userJson, urlPaths.UNARCHIVE_JOB_APPLICATION + storedUser.userId + `/${selectedRowData.id}`);
             const updatedData = data.filter(item => item.id !== selectedRowData.id);
             localStorage.setItem('archivedJobs', JSON.stringify(updatedData));
             const unArchivedJobs = JSON.parse(localStorage.getItem('unArchivedJobs'))
@@ -184,7 +176,7 @@ const ArchivedTableContainer = () => {
 
     return (
         <div className="search-table-container">
-            {isLoading && <Loader />}
+            {isLoading && <Loader/>}
             <div className="search-container">
                 <button className="search-button" onClick={toggleSearchBar}>
                     <AiOutlineSearch className="search-icon"/>
@@ -194,8 +186,8 @@ const ArchivedTableContainer = () => {
                     <div className="search-bar">
                         <Select
                             isMulti
-                            options={allTags.map((tag) => ({ value: tag, label: tag }))}
-                            value={tags.map((tag) => ({ value: tag, label: tag }))}
+                            options={allTags.map((tag) => ({value: tag, label: tag}))}
+                            value={tags.map((tag) => ({value: tag, label: tag}))}
                             onChange={(selectedOptions) => handleChange(selectedOptions.map((option) => option.value))}
                             placeholder="Type a tag and press enter..."
                             className="react-select"
@@ -204,7 +196,7 @@ const ArchivedTableContainer = () => {
                 )}
             </div>
             <div className="table-container">
-            <Table data={filteredData} columns={columns} iconStyle={{fontSize: '24px', marginRight: '12px'}}/>
+                <Table data={filteredData} columns={columns} iconStyle={{fontSize: '24px', marginRight: '12px'}}/>
             </div>
             <ConfirmationModal
                 show={showDeleteModal}

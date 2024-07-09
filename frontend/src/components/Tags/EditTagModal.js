@@ -1,8 +1,8 @@
 import React from 'react';
-import { Modal, Button } from 'react-bootstrap';
+import {Modal, Button} from 'react-bootstrap';
 import './EditTagModal.css';
 
-const EditTagModal = ({ show, onHide, onConfirm, tag, editedTagName, setEditedTagName }) => {
+const EditTagModal = ({show, onHide, onConfirm, tag, editedTagName, setEditedTagName}) => {
     return (
         <Modal show={show} onHide={onHide}>
             <Modal.Header closeButton>

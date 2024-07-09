@@ -1,9 +1,8 @@
-import React, { useState } from 'react';
-import { useTable, usePagination } from 'react-table';
+import React, {useState} from 'react';
+import {useTable, usePagination} from 'react-table';
 import './table.css';
 
-const Table = ({ data, columns }) => {
-    const [starredRows, setStarredRows] = useState([]);
+const Table = ({data, columns}) => {
     const [pageSizeOptions, setPageSizeOptions] = useState([5, 10, 20, 30]);
 
 
@@ -23,13 +22,13 @@ const Table = ({ data, columns }) => {
         canNextPage,
         canPreviousPage,
         pageOptions,
-        state: { pageIndex, pageSize },
+        state: {pageIndex, pageSize},
         setPageSize,
     } = useTable(
         {
             columns,
             data,
-            initialState: { pageIndex: 0, pageSize: 5 },
+            initialState: {pageIndex: 0, pageSize: 5},
         },
         usePagination
     );
@@ -52,7 +51,6 @@ const Table = ({ data, columns }) => {
                 <tbody {...getTableBodyProps()}>
                 {page.map((row) => {
                     prepareRow(row);
-                    const isStarred = starredRows.includes(row.original.id);
                     return (
                         <tr {...row.getRowProps()}>
                             {row.cells.map((cell) => {

@@ -1,9 +1,9 @@
 import React, {useEffect, useState} from 'react';
 import {NavLink, Navigate, useNavigate, useLocation} from 'react-router-dom';
-import {Modal, Button, Form, Alert} from 'react-bootstrap';
+import {Button, Form, Alert} from 'react-bootstrap';
 import {useAuth} from '../Context/AuthContext';
 import {careerCompassApi} from '../Utils/CareerCompassApi';
-import {parseJwt, handleLogError} from '../Utils/Helpers';
+import {handleLogError} from '../Utils/Helpers';
 import {BsFillEyeFill, BsFillEyeSlashFill} from 'react-icons/bs';
 import './Signup.css';
 import {ToastContainer, toast} from 'react-toastify';
@@ -52,7 +52,7 @@ function Signup() {
             setEmail(value);
         } else if (name === 'phoneNumber') {
             setPhoneNumber(value);
-        }else if(name==='otp'){
+        } else if (name === 'otp') {
             setOtp(value);
         }
     };
@@ -65,10 +65,9 @@ function Signup() {
         setShowConfirmPassword(!showConfirmPassword);
     };
     useEffect(() => {
-        console.log(message)
         if (message) {
             setEmail(message);
-            handleVerification('email',message);
+            handleVerification('email', message);
         }
     }, [message]);
 
@@ -78,7 +77,7 @@ function Signup() {
         return phoneRegex.test(phoneNumber);
     }
 
-    const handleVerification = async (method,email) => {
+    const handleVerification = async (method, email) => {
         setIsLoading(true);
         setVerificationMethod(method);
         const response = await careerCompassApi.postApiCallWithoutToken(urlPaths.SEND_VERIFICATION, {
@@ -86,7 +85,7 @@ function Signup() {
             verificationStrategyType: method
         });
         let errorMsg;
-        if (response.statusCode != 200) {
+        if (response.statusCode !== 200) {
             errorMsg = response.message;
             setToastMsg(errorMsg);
             notify(errorMsg);
@@ -122,33 +121,32 @@ function Signup() {
         setIsLoading(false);
     };
     const handleOtpSubmit = async (e) => {
-        console.log("OTP")
         setIsLoading(true);
         e.preventDefault();
-            const response = await careerCompassApi.postApiCallWithoutToken(urlPaths.VALIDATE_VERIFICATION, {
-                email,
-                verificationStrategyType: verificationMethod,
-                verificationChallenge: otp
-            });
+        const response = await careerCompassApi.postApiCallWithoutToken(urlPaths.VALIDATE_VERIFICATION, {
+            email,
+            verificationStrategyType: verificationMethod,
+            verificationChallenge: otp
+        });
 
-            if (response.statusCode === 200 && response.data.status==='Success') {
-                notify('Verification is successful. Redirecting to login page..');
-                setTimeout(() => {
-                    navigate('/login');
-                }, 2000);
+        if (response.statusCode === 200 && response.data.status === 'Success') {
+            notify('Verification is successful. Redirecting to login page..');
+            setTimeout(() => {
+                navigate('/login');
+            }, 2000);
+        } else {
+            setWrongOtpAttempts(prevAttempts => prevAttempts + 1);
+            if (wrongOtpAttempts < 2) {
+                notify('Oops, you have entered the wrong OTP. Please enter a valid OTP.');
             } else {
-                setWrongOtpAttempts(prevAttempts => prevAttempts + 1);
-                if (wrongOtpAttempts < 2) {
-                    notify('Oops, you have entered the wrong OTP. Please enter a valid OTP.');
-                } else {
-                    notify("You have reached the maximum limit of OTP's. Please try again using below verification methods.");
-                    setOtp('');
-                    setWrongOtpAttempts(0);
-                    setShowForm(false);
-                    setShowOtp(false);
-                    setshowVerification(true);
-                }
+                notify("You have reached the maximum limit of OTP's. Please try again using below verification methods.");
+                setOtp('');
+                setWrongOtpAttempts(0);
+                setShowForm(false);
+                setShowOtp(false);
+                setshowVerification(true);
             }
+        }
         setIsLoading(false);
 
     }
@@ -179,7 +177,7 @@ function Signup() {
         try {
             setIsLoading(true);
             const response = await careerCompassApi.getApiCallWithoutToken(urlPaths.CHECK_USER_REGISTRATION_STATUS + email);
-            if (response.statusCode == 200) {
+            if (response.statusCode === 200) {
                 if (response.data.userAccountPresent && response.data.accountVerified) {
                     notify(`Account with email:${email} already present, redirecting to Login page..`)
                     setTimeout(() => {
@@ -227,23 +225,23 @@ function Signup() {
     return (
         <div className="signup-container">
             <ToastContainer/>
-            {isLoading && <Loader />}
+            {isLoading && <Loader/>}
             {showVerification && (
                 <div className="verification-options">
                     <Button variant="primary" type="submit" className="btn-block"
                             onClick={() =>
-                                handleVerification('email',email)
+                                handleVerification('email', email)
                             }>
                         Verify by Email
                     </Button>
                     <span className="divider-text">or</span>
                     <Button variant="primary" type="submit" className="btn-block"
-                            onClick={() => handleVerification('sms',email)}>
+                            onClick={() => handleVerification('sms', email)}>
                         Verify by SMS
                     </Button>
                     <span className="divider-text">or</span>
                     <Button variant="primary" type="submit" className="btn-block"
-                            onClick={() => handleVerification('call',email)}>
+                            onClick={() => handleVerification('call', email)}>
                         Verify by Call
                     </Button>
                 </div>

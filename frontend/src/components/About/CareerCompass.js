@@ -1,5 +1,5 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
 import './CareerCompass.css';
 
 function CareerCompass() {
@@ -12,7 +12,9 @@ function CareerCompass() {
     return (
         <div className="career-compass-container">
             <h1>Welcome to CareerCompass</h1>
-            <p>CareerCompass is your go-to tool for managing and tracking job applications seamlessly. Simplify your job search process with personalized tags, comprehensive application tracking, and secure data management.</p>
+            <p>CareerCompass is your go-to tool for managing and tracking job applications seamlessly. Simplify your job
+                search process with personalized tags, comprehensive application tracking, and secure data
+                management.</p>
             <div className="features-technologies">
                 <div className="card">
                     <h2>Key Features:</h2>

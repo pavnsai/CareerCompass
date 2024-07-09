@@ -10,7 +10,6 @@
 }
 
 
-
 .search-container {
     display: flex;
     align-items: center;
@@ -22,6 +21,7 @@
     margin: 20px auto;
     max-width: 800px;
 }
+
 .search-button {
     display: flex;
     align-items: center;
@@ -136,6 +136,7 @@
 .added-tag:nth-child(odd) {
     background-color: #007bff;
 }
+
 .added-tag:nth-child(even) {
     background-color: #28a745;
 }
@@ -157,6 +158,7 @@
     cursor: pointer;
     font-size: 24px;
 }
-.action-star{
-    color:gold;
+
+.action-star {
+    color: gold;
 }

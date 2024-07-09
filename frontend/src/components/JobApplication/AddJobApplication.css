@@ -120,3 +120,67 @@ button[type='submit']:hover {
     font-size: 20px;
     cursor: pointer;
 }
+
+.date-picker-wrapper {
+    position: relative;
+}
+
+.rdp {
+    position: absolute;
+    z-index: 1000;
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    margin-top: 10px;
+}
+
+.rdp-months {
+    padding: 16px;
+}
+
+.rdp-month {
+    background: white;
+}
+
+.rdp-day_selected,
+.rdp-day_selected:focus-visible,
+.rdp-day_selected:hover {
+    background-color: #7c4dff;
+    color: white;
+}
+
+.rdp-day:hover:not(.rdp-day_selected) {
+    background-color: #f0e6ff;
+}
+
+.rdp-head_cell {
+    font-weight: 600;
+    color: #666;
+}
+
+.rdp-nav_button:hover {
+    background-color: #f0e6ff;
+}
+
+.date-display {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    border: 2px solid #ddd;
+    border-radius: 6px;
+    font-size: 16px;
+    transition: all 0.3s;
+    cursor: pointer;
+    background-color: white;
+}
+
+.date-display:hover {
+    border-color: #7c4dff;
+}
+
+.calendar-icon {
+    margin-right: 10px;
+    color: #7c4dff;
+}
+

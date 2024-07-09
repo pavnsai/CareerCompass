@@ -1,13 +1,13 @@
 import React, {useEffect, useState} from 'react';
-import {NavLink, Navigate, useNavigate, useLocation} from 'react-router-dom';
-import {Modal, Button, Form, Alert} from 'react-bootstrap';
+import {NavLink, useNavigate, useLocation} from 'react-router-dom';
+import {Button, Form, Alert} from 'react-bootstrap';
 import {useAuth} from '../Context/AuthContext';
 import {careerCompassApi} from '../Utils/CareerCompassApi';
 import {parseJwt, handleLogError} from '../Utils/Helpers';
 import {BsFillEyeFill, BsFillEyeSlashFill} from 'react-icons/bs';
 import './Login.css';
-import { urlPaths } from "../../Constants";
-import { Formik } from 'formik';
+import {urlPaths} from "../../Constants";
+import {Formik} from 'formik';
 import * as Yup from 'yup';
 import Loader from "../Utils/Loader";
 
@@ -22,21 +22,21 @@ function Login() {
     const isLoggedIn = Auth.userIsAuthenticated();
     const navigate = useNavigate();
     const location = useLocation();
-    const { state } = location;
+    const {state} = location;
     useEffect(() => {
         if (state) {
             setEmail(state.email || '');
             setPassword(state.password || '');
-        }else {
-            setEmail( '');
-            setPassword( '');
+        } else {
+            setEmail('');
+            setPassword('');
         }
     }, [state]);
     const [isError, setIsError] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
-    const [email, setEmail]=useState('');
-    const [password, setPassword]=useState('');
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
     const togglePasswordVisibility = () => {
         setShowPassword(!showPassword);
     };
@@ -49,15 +49,18 @@ function Login() {
     };
 
     useEffect(() => {
-        if(isLoggedIn){
+        if (isLoggedIn) {
             navigate('/jobs');
         }
     }, []);
-    const handleSubmit = async (values, { setSubmitting }) => {
-        const { email, password } = values;
+    const handleSubmit = async (values, {setSubmitting}) => {
+        const {email, password} = values;
         try {
             setIsLoading(true);
-            const response = await careerCompassApi.postApiCallWithoutToken(urlPaths.AUTHENTICATE,{username:email, password});
+            const response = await careerCompassApi.postApiCallWithoutToken(urlPaths.AUTHENTICATE, {
+                username: email,
+                password
+            });
             localStorage.setItem('userDetails', JSON.stringify({
                 userId: response.data.userId,
                 firstName: response.data.firstName,
@@ -90,14 +93,14 @@ function Login() {
 
     return (
         <div className="login-container">
-            {isLoading && <Loader />}
+            {isLoading && <Loader/>}
             <Formik
                 enableReinitialize={true}
-                initialValues={{ email: email, password: password }}
+                initialValues={{email: email, password: password}}
                 validationSchema={LoginSchema}
                 onSubmit={handleSubmit}
             >
-                {({ values, errors, touched, handleChange, handleBlur,setFieldValue, handleSubmit, isSubmitting }) => (
+                {({values, errors, touched, handleChange, handleBlur, setFieldValue, handleSubmit, isSubmitting}) => (
                     <Form onSubmit={handleSubmit} className="login-form">
                         <h2>Login</h2>
                         <Form.Group className="mb-3">
@@ -130,7 +133,7 @@ function Login() {
                                     isInvalid={touched.password && errors.password}
                                 />
                                 <div className="password-toggle" onClick={togglePasswordVisibility}>
-                                    {showPassword ? <BsFillEyeSlashFill /> : <BsFillEyeFill />}
+                                    {showPassword ? <BsFillEyeSlashFill/> : <BsFillEyeFill/>}
                                 </div>
                                 <Form.Control.Feedback type="invalid">{errors.password}</Form.Control.Feedback>
                             </div>
@@ -144,7 +147,8 @@ function Login() {
                                 Sign Up
                             </NavLink>
                         </div>
-                        {isError && <Alert variant="danger" className="mt-3">The email or password provided is incorrect!</Alert>}
+                        {isError && <Alert variant="danger" className="mt-3">The email or password provided is
+                            incorrect!</Alert>}
                     </Form>
                 )}
             </Formik>
