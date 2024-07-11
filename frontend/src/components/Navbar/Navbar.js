@@ -35,15 +35,15 @@ function Navbar({onSignupClick}) {
                 <BootstrapNavbar.Toggle aria-controls="basic-navbar-nav"/>
                 <BootstrapNavbar.Collapse id="basic-navbar-nav">
                     {userIsAuthenticated() && <Nav className="me-auto">
-                        <Nav.Link as={Link} to="/jobs" exact
+                        <Nav.Link as={Link} to="/jobs"
                                   className={location.pathname === '/jobs' ? 'active' : ''}>Job Applications</Nav.Link>
-                        <Nav.Link as={Link} to="/archivedJobs" exact
+                        <Nav.Link as={Link} to="/archivedJobs"
                                   className={location.pathname === '/archivedJobs' ? 'active' : ''}>Archived Job
                             Applications</Nav.Link>
-                        <Nav.Link as={Link} to="/addJobApplication" exact
+                        <Nav.Link as={Link} to="/addJobApplication"
                                   className={location.pathname === '/addJobApplication' ? 'active' : ''}
                         >Add Job Application</Nav.Link>
-                        <Nav.Link as={Link} to="/addTags" exact
+                        <Nav.Link as={Link} to="/addTags"
                                   className={location.pathname === '/addTags' ? 'active' : ''}
                         >Add/Update Tags</Nav.Link>
                     </Nav>}

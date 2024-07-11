@@ -86,7 +86,6 @@ const AddJobApplication = () => {
                                     <AiFillStar
                                         className="action-icon action-star"
                                         onClick={() => setFieldValue('starred', !values.starred)}
-
                                     />
                                 ) : (
                                     <AiOutlineStar

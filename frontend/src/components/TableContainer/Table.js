@@ -40,21 +40,21 @@ const Table = ({data, columns}) => {
         <div>
             <table {...getTableProps()} className="table">
                 <thead>
-                {headerGroups.map((headerGroup) => (
-                    <tr {...headerGroup.getHeaderGroupProps()}>
-                        {headerGroup.headers.map((column) => (
-                            <th {...column.getHeaderProps()}>{column.render('Header')}</th>
+                {headerGroups.map((headerGroup,headerGroupIndex) => (
+                    <tr {...headerGroup.getHeaderGroupProps()} key={headerGroupIndex}>
+                        {headerGroup.headers.map((column,columnIndex) => (
+                            <th {...column.getHeaderProps()} key={columnIndex}>{column.render('Header')}</th>
                         ))}
                     </tr>
                 ))}
                 </thead>
                 <tbody {...getTableBodyProps()}>
-                {page.map((row) => {
+                {page.map((row,rowIndex) => {
                     prepareRow(row);
                     return (
-                        <tr {...row.getRowProps()}>
-                            {row.cells.map((cell) => {
-                                return <td {...cell.getCellProps()}>{cell.render('Cell')}</td>;
+                        <tr {...row.getRowProps()} key={rowIndex}>
+                            {row.cells.map((cell,cellIndex) => {
+                                return <td {...cell.getCellProps()} key={cellIndex}>{cell.render('Cell')}</td>;
                             })}
                         </tr>
                     );

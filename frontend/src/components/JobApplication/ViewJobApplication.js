@@ -21,7 +21,7 @@ const ViewJobApplication = () => {
                 <h2>Job Application Details</h2>
                 <div className="form-group">
                     Starred:
-                    <space></space>
+                    {' '}
                     {rowData.starred ? (
                         <AiFillStar
                             className="action-icon action-star"
