@@ -68,7 +68,10 @@ const ViewJobApplication = () => {
                     <label>Notes:</label>
                     <p>{rowData.notes}</p>
                 </div>
+                <div className="form-row">
+                <button type="button" onClick={() => navigate(-1)}>Cancel</button>
                 {showEdit && <button className="edit-button" onClick={handleEditClick}>Edit</button>}
+                </div>
             </div>
         </div>
     );

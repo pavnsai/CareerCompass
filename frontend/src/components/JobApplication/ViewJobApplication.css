@@ -90,8 +90,9 @@
 }
 
 .edit-button {
+    flex: 1;
     display: block;
-    width: 100%;
+    /*width: 100%;*/
     padding: 12px;
     background-color: #7c4dff;
     color: #fff;
@@ -99,7 +100,7 @@
     border-radius: 6px;
     font-size: 16px;
     cursor: pointer;
-    margin-top: 20px;
+    /*margin-top: 20px;*/
     transition: background-color 0.3s;
 }
 
