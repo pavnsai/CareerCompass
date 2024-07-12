@@ -39,6 +39,25 @@
     font-size: 28px;
 }
 
+.form-star {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.form-star label {
+    display: block;
+    margin-right: 10px;
+    font-weight: bold;
+    color: #333;
+    font-size: 16px;
+}
+
+.action-icon {
+    cursor: pointer;
+}
+
+
 .form-group {
     margin-bottom: 20px;
 }

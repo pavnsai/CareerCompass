@@ -9,7 +9,6 @@
     animation: gradient 60s ease infinite;
 }
 
-
 .search-container {
     display: flex;
     align-items: center;
@@ -50,17 +49,6 @@
     border-radius: 4px;
     padding: 8px;
 }
-
-
-/*.tags-cell {*/
-/*    display: flex;*/
-/*    flex-wrap: nowrap;*/
-/*    gap: 8px;*/
-/*    overflow-x: auto;*/
-/*    white-space: nowrap;*/
-/*    max-width: 200px;*/
-/*}*/
-
 
 .tags-cell {
     display: flex;

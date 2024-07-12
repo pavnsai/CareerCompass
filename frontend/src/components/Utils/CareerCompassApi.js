@@ -175,7 +175,6 @@ const instance = axios.create({
 })
 
 instance.interceptors.request.use(function (config) {
-    // If token is expired, redirect user to login
     if (config.headers.Authorization) {
         const token = config.headers.Authorization.split(' ')[1]
         const data = parseJwt(token)
@@ -187,8 +186,6 @@ instance.interceptors.request.use(function (config) {
 }, function (error) {
     return Promise.reject(error)
 })
-
-// -- Helper functions
 
 function bearerAuth(user) {
     return `Bearer ${user.accessToken}`

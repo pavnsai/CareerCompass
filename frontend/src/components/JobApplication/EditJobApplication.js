@@ -85,7 +85,7 @@ const EditJobApplication = () => {
                 >
                     {({values, setFieldValue, errors, touched}) => (
                         <Form>
-                            <div className="form-group">
+                            <div className="form-star">
                                 <label htmlFor="starred">Starred</label>
                                 {values.starred ? (
                                     <AiFillStar

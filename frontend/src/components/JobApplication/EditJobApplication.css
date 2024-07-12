@@ -32,6 +32,19 @@ h2 {
     color: #333;
     font-size: 16px;
 }
+.form-star {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.form-star label {
+    display: block;
+    margin-right: 10px;
+    font-weight: bold;
+    color: #333;
+    font-size: 16px;
+}
 
 .form-group input[type='text'],
 .form-group input[type='date'],
@@ -58,7 +71,7 @@ h2 {
 }
 
 button {
-    flex: 1; /* Make buttons take equal space */
+    flex: 1;
     padding: 12px;
     font-size: 16px;
     border: none;

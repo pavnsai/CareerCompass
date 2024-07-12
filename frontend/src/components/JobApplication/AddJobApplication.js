@@ -80,8 +80,8 @@ const AddJobApplication = () => {
                 >
                     {({values, setFieldValue, errors, touched}) => (
                         <Form>
-                            <div className="form-group">
-                                <label htmlFor="starred">Starred</label>
+                            <div className="form-star">
+                                <label htmlFor="starred">Want to Star it?</label>
                                 {values.starred ? (
                                     <AiFillStar
                                         className="action-icon action-star"

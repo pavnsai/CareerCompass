@@ -17,7 +17,6 @@ import Select from 'react-select';
 import Loader from "../Utils/Loader";
 import moment from 'moment';
 
-
 const TableContainer = () => {
     const navigate = useNavigate();
     const [tags, setTags] = useState([]);
@@ -54,7 +53,6 @@ const TableContainer = () => {
         setData(allData);
         setIsLoading(false);
     };
-
 
     const columns = [
         {
@@ -102,8 +100,8 @@ const TableContainer = () => {
                                 const tags = [...cell.children].filter(child => child.classList.contains('added-tag'));
                                 let visibleWidth = 0;
                                 for (let i = 0; i < tags.length; i++) {
-                                    const tagWidth = tags[i].offsetWidth + 4; // 4px for gap
-                                    if (visibleWidth + tagWidth > cell.clientWidth - 30) { // 30px for fade + ellipsis
+                                    const tagWidth = tags[i].offsetWidth + 4;
+                                    if (visibleWidth + tagWidth > cell.clientWidth - 30) {
                                         tags[i].style.opacity = '0.5';
                                         break;
                                     }

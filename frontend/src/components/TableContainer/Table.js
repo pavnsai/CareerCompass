@@ -5,7 +5,6 @@ import './table.css';
 const Table = ({data, columns}) => {
     const [pageSizeOptions, setPageSizeOptions] = useState([5, 10, 20, 30]);
 
-
     const handlePageSizeChange = (event) => {
         setPageSize(Number(event.target.value));
     };
@@ -34,7 +33,6 @@ const Table = ({data, columns}) => {
     );
 
     const pageCount = Math.ceil(data.length / pageSize);
-
 
     return (
         <div>

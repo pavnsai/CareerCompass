@@ -85,8 +85,8 @@ const ArchivedTableContainer = () => {
                                 const tags = [...cell.children].filter(child => child.classList.contains('added-tag'));
                                 let visibleWidth = 0;
                                 for (let i = 0; i < tags.length; i++) {
-                                    const tagWidth = tags[i].offsetWidth + 4; // 4px for gap
-                                    if (visibleWidth + tagWidth > cell.clientWidth - 30) { // 30px for fade + ellipsis
+                                    const tagWidth = tags[i].offsetWidth + 4;
+                                    if (visibleWidth + tagWidth > cell.clientWidth - 30) {
                                         tags[i].style.opacity = '0.5';
                                         break;
                                     }
@@ -169,7 +169,7 @@ const ArchivedTableContainer = () => {
 
     useEffect(() => {
         const filtered = tags.length > 0
-            ? data.filter((item) => tags.every((tag) => item.jobTags.map(tagObj => tagObj.name).includes(tag)))
+            ? data.filter((item) => tags.some((tag) => item.jobTags.map(tagObj => tagObj.name).includes(tag)))
             : data;
         setFilteredData(filtered);
     }, [tags, data]);
