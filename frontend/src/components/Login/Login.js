@@ -26,6 +26,9 @@ function Login() {
         if (state) {
             setEmail(state.email || '');
             setPassword(state.password || '');
+            if (state.email && state.password) {
+                handleSubmit({email: state.email, password: state.password}, {setSubmitting: () => {}});
+            }
         } else {
             setEmail('');
             setPassword('');
