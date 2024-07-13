@@ -45,8 +45,10 @@ h2 {
 .signup-form .btn-primary {
     width: 100%;
     margin-top: 20px;
-    background-color: #7c4dff;
-    border-color: #7c4dff;
+    background-color: #007bff;
+    border: none;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .signup-form .btn-primary:hover {
@@ -60,11 +62,13 @@ h2 {
 
 .signup-form .text-center {
     margin-top: 20px;
+    font-size: 14px;
 }
 
 .signup-form .text-center a {
     color: #007bff;
     text-decoration: none;
+    font-weight: bold;
 }
 
 .signup-form .text-center a:hover {
