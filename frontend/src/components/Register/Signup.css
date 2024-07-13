@@ -3,13 +3,9 @@
     justify-content: center;
     align-items: start;
     min-height: 100vh;
-    background-image: url('../../../public/cool-background (2).png');
-    background-size: 200% 200%;
+    background-image: url('../../../public/cool-background.png');
+    background-size: cover;
     animation: gradient 60s ease infinite;
-}
-
-.signup-form {
-    margin-top: 50px;
 }
 
 h2 {
@@ -19,14 +15,23 @@ h2 {
     font-size: 28px;
 }
 
+.signup-form {
+    margin-top: 50px;
+}
+
 .signup-form,
 .verification-options,
 .otp-form,
 .email-toast {
-    background-color: rgba(255, 255, 255, 0.8);
-    padding: 20px;
-    border-radius: 5px;
+    background-color: rgba(255, 255, 255, 0.9);
+    padding: 30px;
+    border-radius: 10px;
     width: 400px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.email-toast{
+    margin-top: 50px;
 }
 
 .signup-form .form-label {
@@ -34,12 +39,19 @@ h2 {
 }
 
 .signup-form .form-control {
-    border-radius: 3px;
+    border-radius: 5px;
 }
 
 .signup-form .btn-primary {
     width: 100%;
     margin-top: 20px;
+    background-color: #7c4dff;
+    border-color: #7c4dff;
+}
+
+.signup-form .btn-primary:hover {
+    background-color: #5a33d6;
+    border-color: #5a33d6;
 }
 
 .signup-form .alert {
@@ -85,15 +97,54 @@ h2 {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-top: 20px;
+    margin-top: 70px;
 }
 
 .verification-options .btn {
     width: 100%;
     margin-bottom: 10px;
+    background-color: #7c4dff;
+    border-color: #7c4dff;
+}
+
+.verification-options .btn:hover {
+    background-color: #5a33d6;
+    border-color: #5a33d6;
 }
 
 .verification-options .divider-text {
     margin: 10px 0;
     text-align: center;
+    color: #6c757d;
+}
+
+.loader {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 9999;
+}
+
+.spinner {
+    border: 4px solid #f3f3f3;
+    border-top: 4px solid #3498db;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
 }

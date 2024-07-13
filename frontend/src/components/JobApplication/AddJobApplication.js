@@ -176,7 +176,10 @@ const AddJobApplication = () => {
                                 <label htmlFor="notes">Notes</label>
                                 <Field as="textarea" id="notes" name="notes"/>
                             </div>
-                            <button type="submit">Submit</button>
+                            <div className="form-row">
+                                <button type="button" onClick={() => navigate(-1)}>Cancel</button>
+                                <button type="submit">Submit</button>
+                            </div>
                         </Form>
                     )}
                 </Formik>

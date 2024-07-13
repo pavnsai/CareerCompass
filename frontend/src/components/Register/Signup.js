@@ -1,61 +1,57 @@
-import React, {useEffect, useState} from 'react';
-import {NavLink, Navigate, useNavigate, useLocation} from 'react-router-dom';
-import {Button, Form, Alert} from 'react-bootstrap';
-import {useAuth} from '../Context/AuthContext';
-import {careerCompassApi} from '../Utils/CareerCompassApi';
-import {handleLogError} from '../Utils/Helpers';
-import {BsFillEyeFill, BsFillEyeSlashFill} from 'react-icons/bs';
-import './Signup.css';
-import {ToastContainer, toast} from 'react-toastify';
+import React, { useEffect, useState } from 'react';
+import { NavLink, Navigate, useNavigate, useLocation } from 'react-router-dom';
+import { Button, Form } from 'react-bootstrap';
+import { useAuth } from '../Context/AuthContext';
+import { careerCompassApi } from '../Utils/CareerCompassApi';
+import { handleLogError } from '../Utils/Helpers';
+import { BsFillEyeFill, BsFillEyeSlashFill } from 'react-icons/bs';
+import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import {urlPaths} from '../../Constants'
+import { urlPaths } from '../../Constants';
 import Loader from "../Utils/Loader";
+import { Formik, Field } from 'formik';
+import * as Yup from 'yup';
+import './Signup.css';
+
+const SignupSchema = Yup.object().shape({
+    firstName: Yup.string().required('First Name is required'),
+    lastName: Yup.string().required('Last Name is required'),
+    password: Yup.string().required('Password is required'),
+    confirmPassword: Yup.string()
+        .oneOf([Yup.ref('password'), null], 'Passwords must match')
+        .required('Confirm Password is required'),
+    email: Yup.string().email('Invalid email').required('Email is required'),
+    phoneNumber: Yup.string()
+        .matches(/^\d{10}$/, 'Phone number must be 10 digits')
+        .notRequired(),
+});
 
 function Signup() {
     const Auth = useAuth();
     const isLoggedIn = Auth.userIsAuthenticated();
     const navigate = useNavigate();
-    const [firstName, setFirstname] = useState('');
-    const [lastName, setLastname] = useState('');
-    const [password, setPassword] = useState('');
-    const [otp, setOtp] = useState('');
-    const [confirmPassword, setConfirmPassword] = useState('');
-    const [email, setEmail] = useState('');
-    const [verificationMethod, setVerificationMethod] = useState('');
-    const [phoneNumber, setPhoneNumber] = useState('');
-    const [isError, setIsError] = useState(false);
     const [showForm, setShowForm] = useState(true);
-    const [showVerification, setshowVerification] = useState(false);
+    const [showVerification, setShowVerification] = useState(false);
     const [showNothing, setShowNothing] = useState(false);
     const [showOtp, setShowOtp] = useState(false);
-    const [errorMessage, setErrorMessage] = useState('');
-    const [showPassword, setShowPassword] = useState(false);
-    const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+    const [verificationMethod, setVerificationMethod] = useState('');
+    const [otp, setOtp] = useState('');
+    const [email, setEmail] = useState('');
+    const [wrongOtpAttempts, setWrongOtpAttempts] = useState(0);
+    const [isLoading, setIsLoading] = useState(false);
     const [toastMsg, setToastMsg] = useState('');
     const notify = (message) => toast(message);
     const location = useLocation();
-    const [wrongOtpAttempts, setWrongOtpAttempts] = useState(0);
     const message = location.state?.email;
-    const [isLoading, setIsLoading] = useState(false);
+    const [showPassword, setShowPassword] = useState(false);
+    const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
-    const handleInputChange = (e) => {
-        const {name, value} = e.target;
-        if (name === 'firstName') {
-            setFirstname(value);
-        } else if (name === 'lastName') {
-            setLastname(value);
-        } else if (name === 'password') {
-            setPassword(value);
-        } else if (name === 'confirmPassword') {
-            setConfirmPassword(value);
-        } else if (name === 'email') {
-            setEmail(value);
-        } else if (name === 'phoneNumber') {
-            setPhoneNumber(value);
-        } else if (name === 'otp') {
-            setOtp(value);
+    useEffect(() => {
+        if (message) {
+            setEmail(message);
+            handleVerification('email', message);
         }
-    };
+    }, [message]);
 
     const togglePasswordVisibility = () => {
         setShowPassword(!showPassword);
@@ -64,25 +60,13 @@ function Signup() {
     const toggleConfirmPasswordVisibility = () => {
         setShowConfirmPassword(!showConfirmPassword);
     };
-    useEffect(() => {
-        if (message) {
-            setEmail(message);
-            handleVerification('email', message);
-        }
-    }, [message]);
-
-
-    function validatePhoneNumber(phoneNumber) {
-        const phoneRegex = /^\d{10}$/;
-        return phoneRegex.test(phoneNumber);
-    }
 
     const handleVerification = async (method, email) => {
         setIsLoading(true);
         setVerificationMethod(method);
         const response = await careerCompassApi.postApiCallWithoutToken(urlPaths.SEND_VERIFICATION, {
             email,
-            verificationStrategyType: method
+            verificationStrategyType: method,
         });
         let errorMsg;
         if (response.statusCode !== 200) {
@@ -90,43 +74,49 @@ function Signup() {
             setToastMsg(errorMsg);
             notify(errorMsg);
             setShowForm(false);
-            setshowVerification(false);
+            setShowVerification(false);
             setShowOtp(false);
             setShowNothing(true);
         } else {
-            if (method === 'email') {
-                let message = 'Verification email has been sent';
-                setToastMsg(message);
-                notify(message)
-                setShowForm(false);
-                setshowVerification(false);
-                setShowOtp(false);
-                setShowNothing(true);
-            } else if (method === 'call') {
-                let message = 'You will receive OTP via call shortly';
-                setToastMsg(message);
-                notify(message)
-                setShowForm(false);
-                setshowVerification(false);
-                setShowOtp(true);
-            } else {
-                let message = 'OTP has been sent to your number';
-                setToastMsg(message);
-                notify(message)
-                setShowForm(false);
-                setshowVerification(false);
-                setShowOtp(true);
+            let message;
+            switch (method) {
+                case 'email':
+                    message = 'Verification email has been sent';
+                    setToastMsg(message);
+                    notify(message);
+                    setShowForm(false);
+                    setShowVerification(false);
+                    setShowOtp(false);
+                    setShowNothing(true);
+                    break;
+                case 'call':
+                    message = 'You will receive OTP via call shortly';
+                    setToastMsg(message);
+                    notify(message);
+                    setShowForm(false);
+                    setShowVerification(false);
+                    setShowOtp(true);
+                    break;
+                default:
+                    message = 'OTP has been sent to your number';
+                    setToastMsg(message);
+                    notify(message);
+                    setShowForm(false);
+                    setShowVerification(false);
+                    setShowOtp(true);
+                    break;
             }
+
         }
         setIsLoading(false);
     };
-    const handleOtpSubmit = async (e) => {
+
+    const handleOtpSubmit = async (values) => {
         setIsLoading(true);
-        e.preventDefault();
         const response = await careerCompassApi.postApiCallWithoutToken(urlPaths.VALIDATE_VERIFICATION, {
             email,
             verificationStrategyType: verificationMethod,
-            verificationChallenge: otp
+            verificationChallenge: otp,
         });
 
         if (response.statusCode === 200 && response.data.status === 'Success') {
@@ -135,7 +125,7 @@ function Signup() {
                 navigate('/login');
             }, 2000);
         } else {
-            setWrongOtpAttempts(prevAttempts => prevAttempts + 1);
+            setWrongOtpAttempts((prevAttempts) => prevAttempts + 1);
             if (wrongOtpAttempts < 2) {
                 notify('Oops, you have entered the wrong OTP. Please enter a valid OTP.');
             } else {
@@ -143,64 +133,47 @@ function Signup() {
                 setOtp('');
                 setWrongOtpAttempts(0);
                 setShowForm(false);
+                setShowVerification(true);
                 setShowOtp(false);
-                setshowVerification(true);
             }
         }
         setIsLoading(false);
+    };
 
-    }
-    const handleRegisterSubmit = async (e) => {
-        e.preventDefault();
-        if (!(firstName && lastName && password && confirmPassword && email)) {
-            setIsError(true);
-            setErrorMessage('Please, fill in all fields!');
-            return;
-        }
-
-        if (phoneNumber && !validatePhoneNumber(phoneNumber)) {
-            setIsError(true);
-            setErrorMessage('Please, enter valid phone number without extension code!');
-            return;
-        }
-
-        if (password !== confirmPassword) {
-            setIsError(true);
-            setErrorMessage('Passwords do not match!');
-            notify();
-            return;
-        }
-        setIsError(false);
-        setErrorMessage('');
-        const user = {firstName, lastName, password, email, phoneNumber: '+1' + phoneNumber, verifyByPhoneNumber: true};
+    const handleRegisterSubmit = async (values, { setSubmitting }) => {
+        const { firstName, lastName, password, email, phoneNumber } = values;
+        const user = { firstName, lastName, password, email, phoneNumber: '+1' + phoneNumber, verifyByPhoneNumber: true };
 
         try {
             setIsLoading(true);
             const response = await careerCompassApi.getApiCallWithoutToken(urlPaths.CHECK_USER_REGISTRATION_STATUS + email);
             if (response.statusCode === 200) {
                 if (response.data.userAccountPresent && response.data.accountVerified) {
-                    notify(`Account with email:${email} already present, redirecting to Login page..`)
+                    notify(`Account with email:${email} already present, redirecting to Login page..`);
                     setTimeout(() => {
                         navigate('/login');
                     }, 2000);
                 } else if (!response.data.userAccountPresent && !response.data.accountVerified) {
                     const response = await careerCompassApi.postApiCallWithoutToken(urlPaths.SIGNUP, user);
+                    setToastMsg(`Verification email has been sent to ${email}. Please check your email to verify your account.`);
+                    notify('Verification email has been sent');
+                    setShowForm(false);
+                    setShowVerification(false);
+                    setShowOtp(false);
+                    setShowNothing(true);
                 } else {
-                    notify(`Account with the email:${email} was already present but hasn't verified yet. Please verify`)
+                    notify(`Account with the email:${email} was already present but hasn't verified yet. Please verify`);
                 }
             } else {
-                notify("Something went wrong. Please try again later.")
+                notify("Something went wrong. Please try again later.");
                 setTimeout(() => {
                     navigate('/login');
                 }, 2000);
             }
-            setShowOtp(false);
-            setShowForm(false);
-            setshowVerification(true);
-            setIsError(false);
-            setErrorMessage('');
+            // setShowOtp(false);
+            // setShowForm(false);
+            // setShowVerification(true);
             setIsLoading(false);
-
         } catch (error) {
             handleLogError(error);
             if (error.response && error.response.data) {
@@ -211,109 +184,126 @@ function Signup() {
                 } else if (errorData.status === 400) {
                     errorMessage = errorData.errors[0].defaultMessage;
                 }
-                setIsError(true);
-                setErrorMessage(errorMessage);
+                notify(errorMessage);
             }
             setIsLoading(false);
         }
+        setSubmitting(false);
     };
 
     if (isLoggedIn) {
-        return <Navigate to='/'/>;
+        return <Navigate to='/' />;
     }
 
     return (
         <div className="signup-container">
-            <ToastContainer/>
-            {isLoading && <Loader/>}
+            <ToastContainer />
+            {isLoading && <Loader />}
             {showVerification && (
                 <div className="verification-options">
-                    <Button variant="primary" type="submit" className="btn-block"
-                            onClick={() =>
-                                handleVerification('email', email)
-                            }>
+                    <Button variant="primary" className="btn-block" onClick={() => handleVerification('email', email)}>
                         Verify by Email
                     </Button>
                     <span className="divider-text">or</span>
-                    <Button variant="primary" type="submit" className="btn-block"
-                            onClick={() => handleVerification('sms', email)}>
+                    <Button variant="primary" className="btn-block" onClick={() => handleVerification('sms', email)}>
                         Verify by SMS
                     </Button>
                     <span className="divider-text">or</span>
-                    <Button variant="primary" type="submit" className="btn-block"
-                            onClick={() => handleVerification('call', email)}>
+                    <Button variant="primary" className="btn-block" onClick={() => handleVerification('call', email)}>
                         Verify by Call
                     </Button>
                 </div>
             )}
             {showOtp && (
-                <Form onSubmit={handleOtpSubmit} className="otp-form">
-                    <Form.Group className="mb-3">
-                        <Form.Label>Please Enter the OTP:</Form.Label>
-                        <Form.Control type="text" name="otp" value={otp} onChange={handleInputChange}/>
-                    </Form.Group>
-                    <Button variant="primary" type="submit" className="btn-block">
-                        Verify
-                    </Button>
-                </Form>
+                <Formik
+                    initialValues={{ otp: '' }}
+                    onSubmit={handleOtpSubmit}
+                >
+                    {({ handleSubmit }) => (
+                        <Form onSubmit={handleSubmit} className="otp-form">
+                            <Form.Group className="mb-3">
+                                <Form.Label>Please Enter the OTP:</Form.Label>
+                                <Field as={Form.Control} type="text" name="otp" value={otp} onChange={(e) => setOtp(e.target.value)} />
+                            </Form.Group>
+                            <Button variant="primary" type="submit" className="btn-block">
+                                Verify
+                            </Button>
+                        </Form>
+                    )}
+                </Formik>
             )}
-            {showForm && (
-                <Form onSubmit={handleRegisterSubmit} className="signup-form">
-                    <h2>Sign up</h2>
-                    <Form.Group className="mb-3">
-                        <Form.Label>First Name*</Form.Label>
-                        <Form.Control type="text" name="firstName" value={firstName} onChange={handleInputChange}/>
-                    </Form.Group>
-                    <Form.Group className="mb-3">
-                        <Form.Label>Last Name*</Form.Label>
-                        <Form.Control type="text" name="lastName" value={lastName} onChange={handleInputChange}/>
-                    </Form.Group>
-                    <Form.Group className="mb-3">
-                        <Form.Label>Password*</Form.Label>
-                        <div className="password-input">
-                            <Form.Control type={showPassword ? "text" : "password"} name="password" value={password}
-                                          onChange={handleInputChange}/>
-                            <div className="password-toggle" onClick={togglePasswordVisibility}>
-                                {showPassword ? <BsFillEyeSlashFill/> : <BsFillEyeFill/>}
+            {showForm && <Formik
+                initialValues={{
+                    firstName: '',
+                    lastName: '',
+                    password: '',
+                    confirmPassword: '',
+                    email: '',
+                    phoneNumber: '',
+                }}
+                validationSchema={SignupSchema}
+                onSubmit={handleRegisterSubmit}
+            >
+                {({ handleSubmit, errors, touched }) => (
+                    <Form onSubmit={handleSubmit} className="signup-form">
+                        <h2>Sign up</h2>
+                        <Form.Group className="mb-3">
+                            <Form.Label>First Name*</Form.Label>
+                            <Field as={Form.Control} type="text" name="firstName" isInvalid={touched.firstName && !!errors.firstName} />
+                            <Form.Control.Feedback type="invalid">{errors.firstName}</Form.Control.Feedback>
+                        </Form.Group>
+                        <Form.Group className="mb-3">
+                            <Form.Label>Last Name*</Form.Label>
+                            <Field as={Form.Control} type="text" name="lastName" isInvalid={touched.lastName && !!errors.lastName} />
+                            <Form.Control.Feedback type="invalid">{errors.lastName}</Form.Control.Feedback>
+                        </Form.Group>
+                        <Form.Group className="mb-3">
+                            <Form.Label>Password*</Form.Label>
+                            <div className="password-input">
+                                <Field as={Form.Control} type={showPassword ? "text" : "password"} name="password" isInvalid={touched.password && !!errors.password} />
+                                <div className="password-toggle" onClick={togglePasswordVisibility}>
+                                    {showPassword ? <BsFillEyeSlashFill /> : <BsFillEyeFill />}
+                                </div>
+                                <Form.Control.Feedback type="invalid">{errors.password}</Form.Control.Feedback>
                             </div>
-                        </div>
-                    </Form.Group>
-                    <Form.Group className="mb-3">
-                        <Form.Label>Confirm Password*</Form.Label>
-                        <div className="password-input">
-                            <Form.Control type={showConfirmPassword ? "text" : "password"} name="confirmPassword"
-                                          value={confirmPassword} onChange={handleInputChange}/>
-                            <div className="password-toggle" onClick={toggleConfirmPasswordVisibility}>
-                                {showConfirmPassword ? <BsFillEyeSlashFill/> : <BsFillEyeFill/>}
+                        </Form.Group>
+                        <Form.Group className="mb-3">
+                            <Form.Label>Confirm Password*</Form.Label>
+                            <div className="password-input">
+                                <Field as={Form.Control} type={showConfirmPassword ? "text" : "password"} name="confirmPassword" isInvalid={touched.confirmPassword && !!errors.confirmPassword} />
+                                <div className="password-toggle" onClick={toggleConfirmPasswordVisibility}>
+                                    {showConfirmPassword ? <BsFillEyeSlashFill /> : <BsFillEyeFill />}
+                                </div>
+                                <Form.Control.Feedback type="invalid">{errors.confirmPassword}</Form.Control.Feedback>
                             </div>
+                        </Form.Group>
+                        <Form.Group className="mb-3">
+                            <Form.Label>Email*</Form.Label>
+                            <Field as={Form.Control} type="email" name="email" isInvalid={touched.email && !!errors.email} />
+                            <Form.Control.Feedback type="invalid">{errors.email}</Form.Control.Feedback>
+                        </Form.Group>
+                        <Form.Group className="mb-3">
+                            <Form.Label>Phone Number</Form.Label>
+                            <Field as={Form.Control} type="tel" name="phoneNumber" isInvalid={touched.phoneNumber && !!errors.phoneNumber} />
+                            <Form.Control.Feedback type="invalid">{errors.phoneNumber}</Form.Control.Feedback>
+                        </Form.Group>
+                        <Button variant="primary" type="submit" className="btn-block">
+                            Signup
+                        </Button>
+                        <div className="mt-3 text-center">
+                            Already have an account?{' '}
+                            <NavLink to="/login">
+                                Login
+                            </NavLink>
                         </div>
-                    </Form.Group>
-                    <Form.Group className="mb-3">
-                        <Form.Label>Email*</Form.Label>
-                        <Form.Control type="email" name="email" value={email} onChange={handleInputChange}/>
-                    </Form.Group>
-                    <Form.Group className="mb-3">
-                        <Form.Label>Phone Number*</Form.Label>
-                        <Form.Control type="tel" name="phoneNumber" value={phoneNumber} onChange={handleInputChange}/>
-                    </Form.Group>
-                    <Button variant="primary" type="submit" className="btn-block">
-                        Signup
-                    </Button>
-                    <div className="mt-3 text-center">
-                        Already have an account?{' '}
-                        <NavLink to="/login">
-                            Login
-                        </NavLink>
-                    </div>
-                    {isError && <Alert variant="danger" className="mt-3">{errorMessage}</Alert>}
-                </Form>
-            )}
+                    </Form>
+                )}
+            </Formik>
+            }
             {showNothing && <div className="email-toast">
                 {toastMsg}</div>}
-
         </div>
     );
 }
 
 export default Signup;
-

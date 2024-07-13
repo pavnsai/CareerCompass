@@ -120,8 +120,13 @@ function Login() {
                             />
                             <Form.Control.Feedback type="invalid">{errors.email}</Form.Control.Feedback>
                         </Form.Group>
-                        <Form.Group className="mb-3">
-                            <Form.Label>Password</Form.Label>
+                        <Form.Group className="mb-3 password-group">
+                            <div className="label-and-forgot">
+                                <Form.Label>Password</Form.Label>
+                                <NavLink to="/forgot-password" className="forgot-password-link">
+                                    Forgot Password?
+                                </NavLink>
+                            </div>
                             <div className="password-input">
                                 <Form.Control
                                     type={showPassword ? "text" : "password"}

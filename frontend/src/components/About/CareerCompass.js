@@ -37,6 +37,11 @@ function CareerCompass() {
                 </div>
             </div>
             <button className="career-compass-button" onClick={handleGetStarted}>Get Started</button>
+            <div className="resource-link">
+                <a href="/Project%207%20Update.pdf" target="_blank" rel="noopener noreferrer">
+                    View Resource
+                </a>
+            </div>
         </div>
     );
 }
