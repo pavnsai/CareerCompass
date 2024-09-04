@@ -1,0 +1,42 @@
+spring:
+  application:
+    name: careercompass
+  devtools:
+    restart:
+      enabled: true
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: appari.pavan99@gmail.com
+    password: oysn grxh wrfh faly
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+
+  datasource:
+    url: jdbc:mysql://careercompass.ctao0w4issll.us-east-1.rds.amazonaws.com/careercompass
+    username: admin
+    password: admin123
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    hikari:
+      maximum-pool-size: 10
+      minimum-idle: 5
+      idle-timeout: 30000
+      max-lifetime: 1800000
+      connection-timeout: 20000
+      pool-name: HikariCP
+
+app:
+  jwt:
+    secret: Ft8!fWk2p$ueNxY6@7mV*Q9JzGbE5RDH&C\hjKL%PO^TrSw4dZv3c(qX)UsIaAg+B
+    expiration:
+      minutes: 30
+  cors:
+    allowed-origins: http://localhost:3000
+
+logging:
+  level:
+    org.springframework.security: DEBUG

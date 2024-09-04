@@ -6,7 +6,8 @@ const prod = {
 
 const dev = {
   url: {
-    API_BASE_URL: 'http://localhost:8080'
+    // API_BASE_URL: 'http://localhost:8080'
+API_BASE_URL: 'https://ig5rs61ds0.execute-api.us-east-1.amazonaws.com/devl'
   }
 }
 export const urlPaths={
