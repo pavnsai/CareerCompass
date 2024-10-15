@@ -1,0 +1,183 @@
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Condensed:wght@300;400;500;600;700&display=swap');
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'IBM Plex Sans Condensed', sans-serif;
+    background: #f7f9fc;
+}
+
+.intro-section {
+    padding: 50px 20px;
+    background: #f7f9fc;
+    text-align: center;
+}
+
+.intro-section .buttons {
+    margin-top: 20px;
+}
+
+.intro-section .buttons .start-now-btn,
+.intro-section .buttons .architecture-btn {
+    background-color: #1565C0;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 18px;
+    cursor: pointer;
+    margin: 5px;
+    border-radius: 15px;
+    transition: background-color 0.3s ease;
+}
+
+.intro-section .buttons .start-now-btn:hover,
+.intro-section .buttons .architecture-btn:hover {
+    background-color: #303F9F;
+}
+
+.stackable-cards-section {
+    display: flex;
+    height: 100vh;
+    overflow: visible;
+}
+
+.left-content {
+    flex: 2;
+    padding: 20px;
+    font-size: 24px;
+    background: #FFFFFF;
+    overflow: hidden;
+    height: 100vh;
+    z-index: 1;
+    overflow: auto;
+    position: sticky;
+    top: 0;
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE and Edge */
+}
+
+.left-content::-webkit-scrollbar {
+    display: none; /* Safari and Chrome */
+}
+
+.right-content {
+    flex: 2;
+    position: relative;
+    overflow: visible;
+    z-index: 2;
+    height: 100vh;
+}
+
+.cards {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.card {
+    padding: 1.5em;
+    color: white;
+    width: 80%;
+    height: 200px;
+    background: linear-gradient(to right, #0a74e4, #83c1e1);
+    font-size: 18px;
+    line-height: 1.2;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    position: absolute;
+    top: 0;
+    left: 10%;
+    will-change: transform;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+.card-heading {
+    background: transparent;
+    border: 1px solid white; /* White border for the button */
+    color: white;
+    font-size: 24px;
+    padding: 10px 10px;
+    margin-bottom: 10px;
+    cursor: default;
+    pointer-events: none;
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    border-radius: 5px;
+}
+.card ul {
+    margin-top: 50px;
+}
+
+.card li {
+    margin-bottom: 5px;
+}
+.card h2 {
+    font-size: 24px;
+    margin-bottom: 0.5em;
+}
+
+.architecture-section {
+    padding: 50px 20px;
+    background: #EDF2F4;
+    text-align: center;
+}
+
+.architecture-section h2 {
+    font-size: 32px;
+    margin-bottom: 20px;
+    color: #1565C0;
+}
+.architecture-section p {
+    font-size: 18px;
+    color: #333;
+    margin-bottom: 30px;
+    line-height: 1.5;
+}
+
+.architecture-image {
+    max-width: 80%;
+    height: auto;
+    margin: 20px 0;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+}
+
+.architecture-details {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+}
+
+.architecture-card {
+    flex: 1 1 30%;
+    background: #f7f9fc;
+    border: 1px solid #ddd;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    transition: transform 0.3s ease;
+}
+
+.architecture-card:hover {
+    transform: translateY(-5px);
+}
+
+.architecture-card h3 {
+    font-size: 22px;
+    color: #1565C0;
+    margin-bottom: 10px;
+}
+
+.architecture-card p {
+    font-size: 16px;
+    color: #555;
+    line-height: 1.4;
+}

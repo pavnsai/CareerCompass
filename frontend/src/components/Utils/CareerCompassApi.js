@@ -41,7 +41,7 @@ async function postApiCall(userJson, path, body) {
 async function postApiCallWithoutToken(path, body) {
     try {
         const response = await instance.post(path, body, {
-            headers: {'Content-type': 'application/json'}
+            headers: {'Content-Type': 'application/json', 'Accept': 'application/json, text/plain, */*'}
         })
 
         if (response.status === 201 || response.status === 200) {

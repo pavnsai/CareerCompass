@@ -9,6 +9,7 @@ import {ToastContainer, toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import './ForgotPassword.css';
 import {useNavigate} from "react-router-dom";
+import Loader from "../Utils/Loader";
 
 const ForgotPasswordSchema = Yup.object().shape({
     email: Yup.string().email('Invalid email').required('Email is required'),
@@ -24,11 +25,15 @@ function ForgotPassword() {
         try {
             setIsLoading(true);
             setIsError(false);
-            // await careerCompassApi.postApiCallWithoutToken(urlPaths.FORGOT_PASSWORD, {email});
-            toast.success('Password reset email sent successfully!. Redirecting to login page..');
+            const response=await careerCompassApi.postApiCallWithoutToken(urlPaths.FORGOT_PASSWORD_CHALLENGE, {email,verificationStrategyType: 'email'});
+            if (response.statusCode === 200) {
+                toast.success('Password reset email sent successfully!. Please click the link to reset your password');
+            } else {
+                toast.error('Sending password reset link failed. Please try again.');
+            }
             setTimeout(() => {
                 navigate('/login');
-            }, 3000);
+            }, 5000);
             setIsLoading(false);
             setSubmitting(false);
         } catch (error) {
@@ -41,6 +46,7 @@ function ForgotPassword() {
 
     return (
         <div className="forgot-password-container">
+            {isLoading && <Loader />}
             <Formik
                 initialValues={{email: ''}}
                 validationSchema={ForgotPasswordSchema}
@@ -61,9 +67,12 @@ function ForgotPassword() {
                             />
                             <Form.Control.Feedback type="invalid">{errors.email}</Form.Control.Feedback>
                         </Form.Group>
-                        <Button variant="primary" type="submit" className="btn-block" disabled={isSubmitting}>
-                            Submit
-                        </Button>
+                        <div className="form-row">
+                            <Button variant="secondary" type="button" onClick={() => navigate(-1)}>Cancel</Button>
+                            <Button variant="primary" type="submit" className="btn-block" disabled={isSubmitting}>
+                                Submit
+                            </Button>
+                        </div>
                         {isError &&
                             <Alert variant="danger" className="mt-3">Failed to send password reset email. Please try
                                 again.</Alert>}

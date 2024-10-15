@@ -74,11 +74,9 @@ function Login() {
             Auth.userLogin(authenticatedUser);
             const userJson = JSON.parse(localStorage.getItem('user'));
             const storedUser = JSON.parse(localStorage.getItem('userDetails'));
-            const [getAllTags, unarchivedJobs, archivedJobs] = await Promise.all([
-                careerCompassApi.getApiCall(userJson, urlPaths.GET_ALL_TAGS + storedUser.userId),
-                careerCompassApi.getApiCall(userJson, urlPaths.GET_UNARCHIVED_JOB_APPLICATIONS + storedUser.userId),
-                careerCompassApi.getApiCall(userJson, urlPaths.GET_ARCHIVED_JOB_APPLICATIONS + storedUser.userId)
-            ]);
+            const getAllTags = await careerCompassApi.getApiCall(userJson, urlPaths.GET_ALL_TAGS + storedUser.userId);
+            const unarchivedJobs = await careerCompassApi.getApiCall(userJson, urlPaths.GET_UNARCHIVED_JOB_APPLICATIONS + storedUser.userId);
+            const archivedJobs = await careerCompassApi.getApiCall(userJson, urlPaths.GET_ARCHIVED_JOB_APPLICATIONS + storedUser.userId);
             localStorage.setItem('allTags', JSON.stringify(getAllTags.data));
             localStorage.setItem('unArchivedJobs', JSON.stringify(unarchivedJobs.data));
             localStorage.setItem('archivedJobs', JSON.stringify(archivedJobs.data));

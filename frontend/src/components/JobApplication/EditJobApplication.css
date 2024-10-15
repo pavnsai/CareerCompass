@@ -11,8 +11,8 @@
 h2 {
     text-align: center;
     margin-bottom: 20px;
-    color: #7c4dff;
-    font-size: 28px;
+    color: #007bff;
+    font-size: 24px;
 }
 
 .form-group {
@@ -62,7 +62,7 @@ h2 {
 .form-group input[type='date']:focus,
 .form-group select:focus,
 .form-group textarea:focus {
-    border-color: #7c4dff;
+    border-color: #007bff;
     outline: none;
 }
 
@@ -85,12 +85,14 @@ button {
     background-color: #007bff;
     padding: 12px;
     font-size: 16px;
+    font-weight: bold;
     transition: background-color 0.3s;
 }
 
 .btn-primary:hover {
     background-color: #007bff;
     border-color: #6200ea;
+    transform: translateY(-2px);
 }
 
 .btn-secondary {
@@ -98,12 +100,14 @@ button {
     border-color: #6c757d;
     padding: 12px;
     font-size: 16px;
+    font-weight: bold;
     transition: background-color 0.3s;
 }
 
 .btn-secondary:hover {
     background-color: #5a6268;
     border-color: #545b62;
+    transform: translateY(-2px);
 }
 
 .date-label {
@@ -146,7 +150,7 @@ button {
 .rdp-day_selected,
 .rdp-day_selected:focus-visible,
 .rdp-day_selected:hover {
-    background-color: #7c4dff;
+    background-color: #007bff;
     color: white;
 }
 
@@ -176,7 +180,7 @@ button {
 }
 
 .date-display:hover {
-    border-color: #7c4dff;
+    border-color: #007bff;
 }
 
 .calendar-icon {

@@ -1,18 +1,18 @@
 import React from 'react';
-import {useLocation, useNavigate} from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import './ViewJobApplication.css';
-import {AiFillStar, AiOutlineStar} from "react-icons/ai";
-import moment from "moment/moment";
+import { AiFillStar, AiOutlineStar } from 'react-icons/ai';
+import moment from 'moment';
 
 const ViewJobApplication = () => {
     const location = useLocation();
     const navigate = useNavigate();
     const rowData = location.state?.rowData;
     const showEdit = location.state?.showEdit ?? true;
-    const tagNames = rowData.jobTags.map(tag => tag.name);
+    const tagNames = rowData.jobTags.map((tag) => tag.name);
 
     const handleEditClick = () => {
-        navigate('/edit', {state: {rowData}});
+        navigate('/edit', { state: { rowData } });
     };
 
     return (
@@ -20,16 +20,11 @@ const ViewJobApplication = () => {
             <div className="row-details">
                 <h2>Job Application Details</h2>
                 <div className="form-group">
-                    Starred:
-                    {' '}
+                    Starred:{' '}
                     {rowData.starred ? (
-                        <AiFillStar
-                            className="action-icon action-star"
-                        />
+                        <AiFillStar className="action-icon action-star" />
                     ) : (
-                        <AiOutlineStar
-                            className="action-icon"
-                        />
+                        <AiOutlineStar className="action-icon" />
                     )}
                 </div>
                 <div className="form-row">
@@ -60,7 +55,9 @@ const ViewJobApplication = () => {
                     <label>Tags:</label>
                     <div className="tags-container">
                         {tagNames.map((tag, index) => (
-                            <span key={index} className={`added-tag tag-${index % 4}`}>{tag}</span>
+                            <span key={index} className={`added-tag tag-${index % 4}`}>
+                {tag}
+              </span>
                         ))}
                     </div>
                 </div>
@@ -69,8 +66,12 @@ const ViewJobApplication = () => {
                     <p>{rowData.notes}</p>
                 </div>
                 <div className="form-row">
-                <button type="button" onClick={() => navigate(-1)}>Cancel</button>
-                {showEdit && <button className="edit-button" onClick={handleEditClick}>Edit</button>}
+                    <button className="btn btn-secondary" onClick={() => navigate(-1)}>Cancel</button>
+                    {showEdit && (
+                        <button className="edit-button" onClick={handleEditClick}>
+                            Edit
+                        </button>
+                    )}
                 </div>
             </div>
         </div>

@@ -1,11 +1,12 @@
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Condensed:wght@300;400;500;600;700&display=swap');
 .signup-container {
     display: flex;
     justify-content: center;
     align-items: start;
     min-height: 100vh;
-    background-image: url('../../../public/cool-background.png');
-    background-size: cover;
-    animation: gradient 60s ease infinite;
+    background: linear-gradient(to bottom, #e3f2fd, #bbdefb);
+    padding: 20px;
+    font-family: 'IBM Plex Sans Condensed', sans-serif;
 }
 
 h2 {
@@ -30,7 +31,7 @@ h2 {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-.email-toast{
+.email-toast {
     margin-top: 50px;
 }
 

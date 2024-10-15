@@ -176,8 +176,8 @@ const EditJobApplication = () => {
                                 <Field as="textarea" id="notes" name="notes"/>
                             </div>
                             <div className="form-row">
-                                <button type="button" onClick={() => navigate(-1)}>Cancel</button>
-                                <button type="submit">Update</button>
+                                <button className="btn btn-secondary" onClick={() => navigate(-1)}>Cancel</button>
+                                <button className="btn btn-primary">Update</button>
                             </div>
                         </Form>
                     )}

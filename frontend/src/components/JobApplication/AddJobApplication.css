@@ -1,23 +1,13 @@
-.add-job-application {
-    max-width: 700px;
-    width: 100%;
-    margin: 0 auto;
-    padding: 30px;
-    margin-top: 20px;
-    background-color: #ffffff;
-    border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
-
-
 .add-job-application-container {
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 100vh;
-    background-image: url('../../../public/cool-background.png');
+    min-height: 80vh;
     background-size: 200% 200%;
+    background: #90CCF4;
+    /*background: linear-gradient(to bottom, #e3f2fd, #bbdefb);*/
     animation: gradient 60s ease infinite;
+    padding: 20px;
 }
 
 @keyframes gradient {
@@ -32,17 +22,26 @@
     }
 }
 
+.add-job-application {
+    max-width: 600px;
+    width: 100%;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
 .add-job-application h2 {
     margin-bottom: 20px;
     text-align: center;
-    color: #7c4dff;
-    font-size: 28px;
+    color: #007bff;
+    font-size: 24px;
 }
 
 .form-star {
     display: flex;
     align-items: center;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
 }
 
 .form-star label {
@@ -55,16 +54,16 @@
 
 .action-icon {
     cursor: pointer;
+    font-size: 24px;
 }
 
-
 .form-group {
-    margin-bottom: 20px;
+    margin-bottom: 15px;
 }
 
 .form-group label {
     display: block;
-    margin-bottom: 8px;
+    margin-bottom: 5px;
     font-weight: bold;
     color: #333;
     font-size: 16px;
@@ -75,10 +74,10 @@
 .form-group select,
 .form-group textarea {
     width: 100%;
-    padding: 10px;
+    padding: 8px;
     border: 2px solid #ddd;
     border-radius: 6px;
-    font-size: 16px;
+    font-size: 14px;
     transition: border-color 0.3s;
 }
 
@@ -86,7 +85,7 @@
 .form-group input[type='date']:focus,
 .form-group select:focus,
 .form-group textarea:focus {
-    border-color: #7c4dff;
+    border-color: #007bff;
     outline: none;
 }
 
@@ -105,41 +104,45 @@
 }
 
 .form-group textarea {
-    height: 100px;
+    height: 80px;
 }
 
 .form-row {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    grid-gap: 20px;
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
 }
 
-.form-row .form-group {
-    margin-bottom: 0;
+.form-row button {
+    flex: 1;
+    padding: 10px;
 }
 
-button[type='submit'] {
-    display: block;
-    width: 100%;
-    padding: 12px;
-    background-color: #007bff;
-    /*background-color: #7c4dff;*/
-    color: #fff;
-    border: none;
+.btn-secondary {
+    background-color: #6c757d;
+    color: white;
+    font-weight: bold;
+}
+
+.btn-secondary:hover {
+    background-color: #5a6268;
+    transform: translateY(-2px);
+}
+
+.btn-primary {
     border-radius: 6px;
-    font-size: 16px;
-    cursor: pointer;
-    transition: background-color 0.3s;
+    background-color: #007bff;
+    color: white;
+    font-weight: bold;
 }
 
-button[type='submit']:hover {
-    background-color: #7c4dff;
+.btn-primary:hover {
+    background-color: #0056b3;
+    transform: translateY(-2px);
 }
 
 .action-star {
     color: #ffd700;
-    font-size: 20px;
-    cursor: pointer;
 }
 
 .date-picker-wrapper {
@@ -167,7 +170,7 @@ button[type='submit']:hover {
 .rdp-day_selected,
 .rdp-day_selected:focus-visible,
 .rdp-day_selected:hover {
-    background-color: #7c4dff;
+    background-color: #007bff;
     color: white;
 }
 
@@ -187,21 +190,15 @@ button[type='submit']:hover {
 .date-display {
     display: flex;
     align-items: center;
-    padding: 10px;
+    padding: 8px;
     border: 2px solid #ddd;
     border-radius: 6px;
-    font-size: 16px;
+    font-size: 14px;
     transition: all 0.3s;
     cursor: pointer;
     background-color: white;
 }
 
 .date-display:hover {
-    border-color: #7c4dff;
+    border-color: #007bff;
 }
-
-.calendar-icon {
-    margin-right: 10px;
-    color: #7c4dff;
-}
-

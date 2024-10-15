@@ -16,7 +16,7 @@ import './Signup.css';
 const SignupSchema = Yup.object().shape({
     firstName: Yup.string().required('First Name is required'),
     lastName: Yup.string().required('Last Name is required'),
-    password: Yup.string().min(6, 'Password must be at least 6 characters').required('Password is required'),
+    password: Yup.string().required('Password is required'),
     confirmPassword: Yup.string()
         .oneOf([Yup.ref('password'), null], 'Passwords must match')
         .required('Confirm Password is required'),
@@ -155,22 +155,6 @@ function Signup() {
                     }, 2000);
                 } else if (!response.data.userAccountPresent && !response.data.accountVerified) {
                     const response = await careerCompassApi.postApiCallWithoutToken(urlPaths.SIGNUP, user);
-                    const responseValidation = await careerCompassApi.postApiCallWithoutToken(urlPaths.SEND_VERIFICATION, {
-                        email,
-                        verificationStrategyType: 'email',
-                    });
-                    if(responseValidation.statusCode===200){
-                        setToastMsg(`Verification email has been sent to ${email}. Please check your email to verify your account.`);
-                        notify('Verification email has been sent');
-                    }else{
-                        setToastMsg(`Something happened while sending email to ${email}. Please try again later.`);
-                        notify('Verification email has been failed');
-                    }
-
-                    setShowForm(false);
-                    setShowVerification(false);
-                    setShowOtp(false);
-                    setShowNothing(true);
                 } else {
                     notify(`Account with the email:${email} was already present but hasn't verified yet. Please verify`);
                 }
@@ -180,9 +164,10 @@ function Signup() {
                     navigate('/login');
                 }, 2000);
             }
-            // setShowOtp(false);
-            // setShowForm(false);
-            // setShowVerification(true);
+
+            setShowOtp(false);
+            setShowForm(false);
+            setShowVerification(true);
             setIsLoading(false);
         } catch (error) {
             handleLogError(error);

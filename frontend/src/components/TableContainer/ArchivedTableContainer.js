@@ -205,7 +205,7 @@ const ArchivedTableContainer = () => {
                 rowData={selectedRowData}
                 bodyContent={
                     <>
-                        <p>Are you sure you want to unArchive this job application?</p>
+                        <p>Are you sure you want to UnArchive this job application?</p>
                         {selectedRowData && (
                             <div>
                                 <p>

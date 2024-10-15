@@ -1,12 +1,15 @@
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Condensed:wght@300;400;500;600;700&display=swap');
 .search-table-container {
     display: flex;
     flex-direction: column;
     justify-content: start;
     align-items: center;
-    min-height: 100vh;
-    background-image: url('../../../public/cool-background.png');
+    min-height: 80vh;
+    background: #90CCF4;
+    /*background: linear-gradient(to bottom, #e3f2fd, #bbdefb);*/
     background-size: 200% 200%;
     animation: gradient 60s ease infinite;
+    font-family: 'IBM Plex Sans Condensed', sans-serif;
 }
 
 .search-container {
@@ -17,15 +20,15 @@
 }
 
 .table-container {
-    margin: 20px auto;
-    max-width: 800px;
+    /*margin: 20px auto;*/
+    max-width: 900px;
 }
 
 .search-button {
     display: flex;
     align-items: center;
     padding: 8px 16px;
-    background-color: #f0f0f0;
+    background-color: white;
     border: none;
     border-radius: 4px;
     cursor: pointer;
@@ -44,17 +47,19 @@
     margin-left: 16px;
 }
 
-.react-chips {
-    background-color: #f0f0f0;
-    border-radius: 4px;
-    padding: 8px;
+.react-select__control {
+    width: 250px;
+}
+
+.react-select__menu {
+    width: 250px;
 }
 
 .tags-cell {
     display: flex;
     flex-wrap: nowrap;
     gap: 4px;
-    max-width: 200px;
+    max-width: 150px;
     overflow: hidden;
     position: relative;
 }
@@ -95,14 +100,6 @@
 
 .tags-cell.overflowing .ellipsis {
     display: block;
-}
-
-.tag {
-    padding: 4px 8px;
-    border-radius: 16px;
-    font-size: 12px;
-    color: white;
-    flex-shrink: 0;
 }
 
 .tag-0 {
@@ -149,4 +146,20 @@
 
 .action-star {
     color: gold;
+}
+
+
+@media screen and (max-width: 768px) {
+    .tags-cell {
+        max-width: 100px;
+    }
+
+    .added-tag {
+        font-size: 10px;
+        padding: 1px 4px;
+    }
+    .table-container {
+        /*margin: 20px auto;*/
+        max-width: 400px;
+    }
 }

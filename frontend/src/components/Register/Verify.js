@@ -24,7 +24,7 @@ function Verify() {
                     setVerificationSuccess(true);
                     setTimeout(() => {
                         navigate('/login');
-                    }, 2000);
+                    }, 3000);
                 } else {
                     notify('Verification failed. Request a new verification link')
                     setVerificationSuccess(false);
@@ -39,7 +39,7 @@ function Verify() {
     }, []);
 
     const handleReVerification = () => {
-        navigate('/signup', {state: {email: email}});
+        navigate('/signup');
     };
     return (
         <div className="verification-container">
@@ -69,10 +69,10 @@ function Verify() {
                         verification link.
                     </p>
                     <p>
-                        Would you like to request a new verification link?
+                        Please try again...
                     </p>
                     <button className="re-verification-button" onClick={handleReVerification}>
-                        Request New Link
+                        Sign up Again?
                     </button>
                 </div>
             )}

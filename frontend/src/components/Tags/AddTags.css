@@ -13,16 +13,17 @@
     display: flex;
     justify-content: center;
     align-items: start;
-    min-height: 100vh;
-    background-image: url('../../../public/cool-background.png');
+    min-height: 80vh;
+    background: #90CCF4;
+    /*background: linear-gradient(to bottom, #e3f2fd, #bbdefb);*/
     background-size: 200% 200%;
     animation: gradient 60s ease infinite;
 }
 
 .add-tags-title {
-    font-size: 28px;
+    font-size: 24px;
     margin-bottom: 20px;
-    color: #7c4dff;
+    color: #007bff;
 }
 
 .tag-list {
@@ -53,30 +54,39 @@
     border-radius: 3px;
     margin-right: 10px;
 }
-
+.tag-input:focus{
+    border-color: #007bff;
+}
 .add-tag-btn {
     flex: 3;
-    padding: 10px 20px;
-    font-size: 16px;
+    padding: 8px 10px;
+    font-size: 14px;
     background-color: #007bff;
     color: #fff;
     border: none;
-    border-radius: 3px;
+    font-weight: bold;
+    border-radius: 6px;
+    cursor: pointer;
+}
+.add-tag-btn:hover {
+    background-color: #0056b3;
+    transform: translateY(-2px);
+}
+.confirm-btn {
+    padding: 8px 18px;
+    font-size: 14px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    font-weight: bold;
+    border-radius: 6px;
     cursor: pointer;
 }
 
-.confirm-btn {
-    padding: 8px 18px;
-    font-size: 16px;
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    border-radius: 3px;
-    cursor: pointer;
-}
 .confirm-btn:hover {
-    background-color: #6200ea;
+    background-color: #0056b3;
     border-color: #6200ea;
+    transform: translateY(-2px);
 }
 
 .added-tags-container {
