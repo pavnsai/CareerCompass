@@ -12,6 +12,7 @@ public class CareerCompassApplication {
 
     public static void main(String[] args) {
         SpringApplication app=new SpringApplication(CareerCompassApplication.class);
+        // added lazy initialization
         app.setLazyInitialization(true);
         app.run(args);
     }
